@@ -9,6 +9,10 @@ namespace CarRentalApp.Data
 {
     public class CarRentalAppDbContext : DbContext
     {
+        public CarRentalAppDbContext(DbContextOptions<CarRentalAppDbContext> options) : base(options)
+        {
+
+        }
         public DbSet<Car> Cars { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace CarRentalApp
            {
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
            });
+
             services.AddRazorPages();
         }
 

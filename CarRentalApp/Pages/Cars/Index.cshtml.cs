@@ -1,26 +1,28 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using CarRentalApp.Data;
+
 namespace CarRentalApp.Pages.Cars
 {
     public class IndexModel : PageModel
     {
-        private readonly IConfiguration _configuration;
+        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
 
-        public IndexModel(IConfiguration configuration)
+        public IndexModel(CarRentalApp.Data.CarRentalAppDbContext context)
         {
-            this._configuration = configuration;
+            _context = context;
         }
-        public string Heading { get; set; }
-        public string Message { get; set; }
-        public void OnGet()
+
+        public IList<Car> Cars { get;set; }
+
+        public async Task OnGetAsync()
         {
-            Heading = "List of Cars";
-            Message = _configuration["Message"];
+            Cars = await _context.Cars.ToListAsync();
         }
     }
 }

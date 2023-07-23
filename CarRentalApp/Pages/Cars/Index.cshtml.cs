@@ -22,7 +22,7 @@ namespace CarRentalApp.Pages.Cars
 
         public async Task OnGetAsync()
         {
-            Cars = await _context.Cars.ToListAsync();
+            Cars = await _context.Cars.Include(q => q.Make).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostDelete(int? carid)

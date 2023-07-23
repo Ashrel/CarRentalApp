@@ -13,11 +13,14 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Cars[0].Year)
-            </th>*@
             <th>
-                @*@Html.DisplayNameFor(model => model.Cars[0].Name)*@
+                @Html.DisplayNameFor(model => model.Cars[0].Year)
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cars[0].Model)
             </th>
             <th></th>
         </tr>
@@ -25,18 +28,21 @@
     <tbody>
 @foreach (var item in Model.Cars) {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>*@
             <td>
-                @*@Html.DisplayFor(modelItem => item.Name)*@
+                @Html.DisplayFor(modelItem => item.Year)
             </td>
             <td>
-                
-                    <a class="btn btn-warning" asp-page="./Update" asp-route-id="@item.Id"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a> 
-                    <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle" aria-hidden="true"></i> Details</a> 
-                    <button class="btn btn-danger deleteBtn" data-id="@item.Id"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-              
+                @Html.DisplayFor(modelItem => item.Make.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+
+                <a class="btn btn-warning" asp-page="./Update" asp-route-id="@item.Id"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
+                <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle" aria-hidden="true"></i> Details</a>
+                <button class="btn btn-danger deleteBtn" data-id="@item.Id"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+
                 @*<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>

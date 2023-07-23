@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
 
-namespace CarRentalApp.Pages.Cars
+namespace CarRentalApp.Pages.Makes
 {
     public class CreateModel : PageModel
     {
@@ -18,18 +18,13 @@ namespace CarRentalApp.Pages.Cars
             _context = context;
         }
 
-        [BindProperty]
-        public Car Car { get; set; }
-
-        public SelectList Makes { get; set; } 
-
         public IActionResult OnGet()
         {
-            Makes = new SelectList(_context.Makes.ToList(), "Id", "Name");
             return Page();
         }
 
-
+        [BindProperty]
+        public Make Make { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -39,7 +34,7 @@ namespace CarRentalApp.Pages.Cars
                 return Page();
             }
 
-            _context.Cars.Add(Car);
+            _context.Makes.Add(Make);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

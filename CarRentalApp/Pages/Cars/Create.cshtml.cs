@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRentalApp.Pages.Cars
 {
@@ -23,12 +24,11 @@ namespace CarRentalApp.Pages.Cars
 
         public SelectList Makes { get; set; } 
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Makes = new SelectList(_context.Makes.ToList(), "Id", "Name");
+            await LoadInitialData();
             return Page();
         }
-
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -36,6 +36,7 @@ namespace CarRentalApp.Pages.Cars
         {
             if (!ModelState.IsValid)
             {
+                await LoadInitialData();
                 return Page();
             }
 
@@ -44,5 +45,10 @@ namespace CarRentalApp.Pages.Cars
 
             return RedirectToPage("./Index");
         }
-    }
+
+        private async Task LoadInitialData()
+        {
+            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+        }
+    } 
 }

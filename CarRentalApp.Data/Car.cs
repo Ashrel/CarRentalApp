@@ -15,7 +15,7 @@ namespace CarRentalApp.Data
         public int Year { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string LicensePlateNumber { get; set; }
 
         public int? MakeId { get; set; }

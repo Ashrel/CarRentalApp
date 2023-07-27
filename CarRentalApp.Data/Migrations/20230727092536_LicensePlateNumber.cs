@@ -14,7 +14,7 @@ namespace CarRentalApp.Data.Migrations
                 name: "LicensePlateNumber",
                 table: "Cars",
                 type: "nvarchar(8)",
-                maxLength: 8,
+                maxLength: 10,
                 nullable: false,
                 defaultValue: "");
         }

@@ -13,5 +13,6 @@ namespace CarRentalApp.Data
         public string Name { get; set; }
 
         public virtual List<Car> Cars { get; set; }
+        public virtual List<CarModel> CarModels { get; set; }
     }
 }

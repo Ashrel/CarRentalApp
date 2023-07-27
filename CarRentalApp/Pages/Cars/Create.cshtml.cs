@@ -50,17 +50,11 @@ namespace CarRentalApp.Pages.Cars
 
             return RedirectToPage("./Index");
         }
-        public async Task<JsonResult> OnGetCarModels(int makeId) 
-        {
-            var models = await _context.CarModels
-                 .Where(q => q.MakeId == makeId)
-                 .ToListAsync();
 
-            return new JsonResult(models);
-        }
         private async Task LoadInitialData()
         {
-            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");           
+            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+            Models = new SelectList(await _context.CarModels.ToListAsync(), "Id", "Name");
             Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
         }
     } 

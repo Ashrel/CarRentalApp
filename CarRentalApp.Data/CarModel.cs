@@ -7,7 +7,7 @@ namespace CarRentalApp.Data
     {
         [Display(Name = "Model")]
         public string Name { get; set; }
-
+        [Display(Name = "Manufacturer")]
         public int? MakeId { get; set; }
         public virtual Make Make { get; set; }
 

@@ -14,14 +14,14 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Car.MakeId" class="control-label"></label>
-                <select class="form-control" asp-for="Car.MakeId" asp-items="Model.Makes">
+                <select id="makes" class="form-control" asp-for="Car.MakeId" asp-items="Model.Makes">
                     <option>Select Make</option>
                 </select>
                 <span asp-validation-for="Car.MakeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Car.CarModelId" class="control-label"></label>
-                <select class="form-control" asp-for="Car.CarModelId" asp-items="Model.Models">
+                <select id="models" class="form-control" asp-for="Car.CarModelId">
                     <option>Select Model</option>
                 </select>
                 <span asp-validation-for="Car.CarModelId" class="text-danger"></span>
@@ -58,4 +58,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/CascadingModelsDropdownListScript.js"></script>
 }

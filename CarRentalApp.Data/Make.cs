@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CarRentalApp.Data
 {
-    public class Make
+    public class Make : BaseDomainEntity
     {
-        public int Id { get; set; }
         [Display(Name="Manufacturer")]
         public string Name { get; set; }
 

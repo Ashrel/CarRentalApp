@@ -23,6 +23,8 @@ namespace CarRentalApp.Pages.Cars
         public Car Car { get; set; }
 
         public SelectList Makes { get; set; }
+        public SelectList Models { get; private set; }
+        public SelectList Colours { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,7 +35,7 @@ namespace CarRentalApp.Pages.Cars
                 return NotFound();
             }
 
-            Makes = new SelectList(_context.Makes.ToList(), "Id", "Name");
+            await LoadInitialData();
 
 
             return Page();
@@ -45,6 +47,7 @@ namespace CarRentalApp.Pages.Cars
         {
             if (!ModelState.IsValid)
             {
+                await LoadInitialData();
                 return Page();
             }
 
@@ -67,6 +70,13 @@ namespace CarRentalApp.Pages.Cars
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private async Task LoadInitialData()
+        {
+            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+            Models = new SelectList(await _context.CarModels.ToListAsync(), "Id", "Name");
+            Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
         }
 
         private bool CarExists(int id)

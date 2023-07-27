@@ -22,7 +22,12 @@ namespace CarRentalApp.Pages.Cars
         [BindProperty]
         public Car Car { get; set; }
 
-        public SelectList Makes { get; set; } 
+        public SelectList Makes { get; set; }
+
+        public SelectList Colours { get; set; }
+
+        public SelectList Models { get; set; }
+
 
         public async Task<IActionResult> OnGet()
         {
@@ -49,6 +54,8 @@ namespace CarRentalApp.Pages.Cars
         private async Task LoadInitialData()
         {
             Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+            Models = new SelectList(await _context.CarModels.ToListAsync(), "Id", "Name");
+            Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
         }
     } 
 }

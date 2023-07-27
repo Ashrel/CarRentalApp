@@ -4,14 +4,16 @@ using CarRentalApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentalApp.Data.Migrations
 {
     [DbContext(typeof(CarRentalAppDbContext))]
-    partial class CarRentalAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230727092536_LicensePlateNumber")]
+    partial class LicensePlateNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +74,7 @@ namespace CarRentalApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarModels");
+                    b.ToTable("CarModel");
                 });
 
             modelBuilder.Entity("CarRentalApp.Data.Colour", b =>
@@ -90,7 +92,7 @@ namespace CarRentalApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colours");
+                    b.ToTable("Colour");
                 });
 
             modelBuilder.Entity("CarRentalApp.Data.Make", b =>

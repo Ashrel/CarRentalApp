@@ -4,14 +4,16 @@ using CarRentalApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentalApp.Data.Migrations
 {
     [DbContext(typeof(CarRentalAppDbContext))]
-    partial class CarRentalAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230727085404_AddedMoreCarDataTables")]
+    partial class AddedMoreCarDataTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,12 +37,10 @@ namespace CarRentalApp.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LicensePlateNumber")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<int?>("MakeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<int>("Year")
@@ -72,7 +72,7 @@ namespace CarRentalApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarModels");
+                    b.ToTable("CarModel");
                 });
 
             modelBuilder.Entity("CarRentalApp.Data.Colour", b =>
@@ -90,7 +90,7 @@ namespace CarRentalApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colours");
+                    b.ToTable("Colour");
                 });
 
             modelBuilder.Entity("CarRentalApp.Data.Make", b =>

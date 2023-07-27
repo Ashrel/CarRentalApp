@@ -23,10 +23,16 @@
             @Html.DisplayFor(model => model.Car.Make.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Car.Model)
+            @Html.DisplayNameFor(model => model.Car.CarModel.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Car.Model)
+            @Html.DisplayFor(model => model.Car.CarModel.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Car.Colour.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Car.Colour.Name)
         </dd>
     </dl>
 </div>

@@ -24,5 +24,24 @@ namespace CarRentalApp.Pages.Makes
         {
             Make = await _context.Makes.ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDelete(int? recordid)
+        {
+            if (recordid == null)
+            {
+                return NotFound();
+            }
+
+            var makes = await _context.Makes.FindAsync(recordid);
+
+            if (makes != null)
+            {
+                _context.Makes.Remove(makes);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }

@@ -27,7 +27,10 @@ namespace CarRentalApp.Pages.Cars
                 return NotFound();
             }
 
-            Car = await _context.Cars.Include (q => q.Make).FirstOrDefaultAsync(m => m.Id == id);
+            Car = await _context.Cars
+                .Include(q => q.Make)
+                .Include(q => q.CarModel)
+                .Include(q => q.Colour).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Car == null)
             {

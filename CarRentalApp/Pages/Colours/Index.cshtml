@@ -7,9 +7,8 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<partial name="_CreateButtonPartial" />
+
 <table class="table">
     <thead>
         <tr>
@@ -20,17 +19,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Colour) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Colour)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_IndexButtonsPartial", item.Id)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<partial name="_IndexDeleteFormPartial" />
+@section Scripts{
+    <script src="~/js/IndexDeleteButtonScript.js"></script>
+}

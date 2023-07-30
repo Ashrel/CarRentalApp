@@ -36,9 +36,4 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a class="btn btn-warning" asp-page="./Update" asp-route-id="@Model.Car.Id">
-        <i class="fa fa-edit" aria-hidden="true"></i> Edit
-        </a>
-    <a class="btn btn-outline-primary" asp-page="Index"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to List</a>
-</div>
+@await Html.PartialAsync("_DetailButtonsPartial", Model.Car.Id)

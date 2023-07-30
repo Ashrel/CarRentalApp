@@ -24,5 +24,24 @@ namespace CarRentalApp.Pages.CarModels
         {
             CarModel = await _context.CarModels.ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDelete(int? recordid)
+        {
+            if (recordid == null)
+            {
+                return NotFound();
+            }
+
+            var carModel = await _context.CarModels.FindAsync(recordid);
+
+            if (carModel != null)
+            {
+                _context.CarModels.Remove(carModel);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }

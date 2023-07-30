@@ -1,5 +1,5 @@
 ﻿@page
-@model CarRentalApp.Pages.Cars.UpdateModel
+@model CarRentalApp.Pages.Cars.EditModel
 
 @{
     ViewData["Title"] = "Update";
@@ -45,17 +45,9 @@
                 <input asp-for="Car.LicensePlateNumber" class="form-control" />
                 <span asp-validation-for="Car.LicensePlateNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-warning" type="submit">
-                    <i class="fa fa-save" aria-hidden="true"></i> Save
-                </button>
-            </div>
+            <partial name="_EditButtonsPartial" />
         </form>
     </div>
-</div>
-
-<div>
-    <a class="btn btn-outline-primary" asp-page="Index"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to List</a>
 </div>
 
 @section Scripts {

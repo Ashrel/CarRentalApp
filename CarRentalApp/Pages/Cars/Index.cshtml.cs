@@ -29,14 +29,14 @@ namespace CarRentalApp.Pages.Cars
                 .ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostDelete(int? carid)
+        public async Task<IActionResult> OnPostDelete(int? recordid)
         {
-            if (carid == null)
+            if (recordid == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Cars.FindAsync(carid);
+            var car = await _context.Cars.FindAsync(recordid);
 
             if (car != null)
             {

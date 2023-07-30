@@ -10,11 +10,11 @@ using CarRentalApp.Data;
 
 namespace CarRentalApp.Pages.Cars
 {
-    public class UpdateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
 
-        public UpdateModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public EditModel(CarRentalApp.Data.CarRentalAppDbContext context)
         {
             _context = context;
         }

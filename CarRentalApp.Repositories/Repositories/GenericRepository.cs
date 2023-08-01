@@ -24,6 +24,7 @@ namespace CarRentalApp.Repositories.Repositories
         {
             var entity = await _db.FindAsync(id);
             _db.Remove(entity);
+            await SaveChanges();
         }
 
         public async Task<bool> Exists(int id)
@@ -44,12 +45,24 @@ namespace CarRentalApp.Repositories.Repositories
         public async Task Insert(TEntity entity)
         {
             await _db.AddAsync(entity);
+            await SaveChanges();
         }
 
-        public void Update(TEntity entity)
+        public async Task<int> SaveChanges()
+        {
+            foreach(var entry in _context.ChangeTracker.Entries<BaseDomainEntity>().Where(q => q.State == EntityState.Added))
+            {
+                entry.Entity.DateCreated = DateTime.Now;
+            }
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(TEntity entity)
         {
             _db.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            await SaveChanges();
         }
     }
 }

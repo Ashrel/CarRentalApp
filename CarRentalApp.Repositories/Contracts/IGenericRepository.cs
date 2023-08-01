@@ -14,6 +14,8 @@ namespace CarRentalApp.Repositories.Contracts
         Task<bool> Exists(int id);
         Task Insert(TEntity entity);
         Task Delete(int id);
-        void Update(TEntity entity);
+        Task Update(TEntity entity);
+
+        Task<int> SaveChanges();
     }
 }

@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Colours
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Colour> _repository;
 
-        public CreateModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public CreateModel(IGenericRepository<Colour> repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         public IActionResult OnGet()
@@ -34,8 +35,7 @@ namespace CarRentalApp.Pages.Colours
                 return Page();
             }
 
-            _context.Colours.Add(Colour);
-            await _context.SaveChangesAsync();
+            await _repository.Insert(Colour);
 
             return RedirectToPage("./Index");
         }

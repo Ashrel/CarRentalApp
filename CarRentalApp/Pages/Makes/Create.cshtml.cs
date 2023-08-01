@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Makes
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Make> _repository;
 
-        public CreateModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public CreateModel(IGenericRepository<Make> repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         public IActionResult OnGet()
@@ -34,8 +35,7 @@ namespace CarRentalApp.Pages.Makes
                 return Page();
             }
 
-            _context.Makes.Add(Make);
-            await _context.SaveChangesAsync();
+            await _repository.Insert(Make);
 
             return RedirectToPage("./Index");
         }

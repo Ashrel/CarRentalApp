@@ -85,6 +85,7 @@ namespace CarRentalApp.Pages.Cars
         private async Task LoadInitialData()
         {
             Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+            Models = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
             Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
         }
 

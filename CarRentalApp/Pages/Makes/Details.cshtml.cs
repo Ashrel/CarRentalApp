@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Makes
 {
     public class DetailsModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
-
-        public DetailsModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        private readonly IGenericRepository<Make> _repository;
+        public DetailsModel(IGenericRepository<Make> repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         public Make Make { get; set; }
@@ -27,7 +27,7 @@ namespace CarRentalApp.Pages.Makes
                 return NotFound();
             }
 
-            Make = await _context.Makes.FirstOrDefaultAsync(m => m.Id == id);
+            Make = await _repository.Get(id.Value);
 
             if (Make == null)
             {

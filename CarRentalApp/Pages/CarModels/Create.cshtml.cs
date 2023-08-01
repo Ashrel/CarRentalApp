@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
 using Microsoft.EntityFrameworkCore;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.CarModels
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<CarModel> _carModelrepository;
+        private readonly IGenericRepository<Make> _makesRepository;
 
-        public CreateModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public CreateModel(IGenericRepository<CarModel> carModelrepository, IGenericRepository<Make> makesRepository)
         {
-            _context = context;
+            this._carModelrepository = carModelrepository;
+            this._makesRepository = makesRepository;
         }
 
         public async Task<IActionResult> OnGet()
@@ -38,15 +41,14 @@ namespace CarRentalApp.Pages.CarModels
                 return Page();
             }
 
-            _context.CarModels.Add(CarModel);
-            await _context.SaveChangesAsync();
+            await _carModelrepository.Insert(CarModel);
 
             return RedirectToPage("./Index");
         }
 
         private async Task LoadInitialData()
         {
-            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
+            Makes = new SelectList(await _makesRepository.GetAll(), "Id", "Name");
         }
     }
 }

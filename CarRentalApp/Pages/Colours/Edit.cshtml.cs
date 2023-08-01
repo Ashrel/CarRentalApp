@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Colours
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Colour> _repository;
 
-        public EditModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public EditModel(IGenericRepository<Colour> repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         [BindProperty]
@@ -29,7 +30,7 @@ namespace CarRentalApp.Pages.Colours
                 return NotFound();
             }
 
-            Colour = await _context.Colours.FirstOrDefaultAsync(m => m.Id == id);
+            Colour = await _repository.Get(id.Value);
 
             if (Colour == null)
             {
@@ -47,11 +48,10 @@ namespace CarRentalApp.Pages.Colours
                 return Page();
             }
 
-            _context.Attach(Colour).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.Update(Colour);
             }
             catch (DbUpdateConcurrencyException)
             {

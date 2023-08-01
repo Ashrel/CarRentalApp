@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Makes
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Make> _repository;
 
-        public EditModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public EditModel(IGenericRepository<Make> repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         [BindProperty]
@@ -29,7 +30,7 @@ namespace CarRentalApp.Pages.Makes
                 return NotFound();
             }
 
-            Make = await _context.Makes.FirstOrDefaultAsync(m => m.Id == id);
+            Make = await _repository.Get(id.Value);
 
             if (Make == null)
             {
@@ -47,15 +48,13 @@ namespace CarRentalApp.Pages.Makes
                 return Page();
             }
 
-            _context.Attach(Make).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.Update(Make);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MakeExists(Make.Id))
+                if (! await MakeExistsAsync(Make.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +67,9 @@ namespace CarRentalApp.Pages.Makes
             return RedirectToPage("./Index");
         }
 
-        private bool MakeExists(int id)
+        private async Task<bool> MakeExistsAsync(int id)
         {
-            return _context.Makes.Any(e => e.Id == id);
+            return await _repository.Exists(id);
         }
     }
 }

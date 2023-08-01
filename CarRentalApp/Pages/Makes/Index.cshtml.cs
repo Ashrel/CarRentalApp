@@ -20,6 +20,7 @@ namespace CarRentalApp.Pages.Makes
 
         public IList<Make> Make { get;set; }
 
+
         public async Task OnGetAsync()
         {
             Make = await _context.Makes.ToListAsync();

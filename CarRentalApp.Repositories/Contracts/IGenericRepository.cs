@@ -10,7 +10,7 @@ namespace CarRentalApp.Repositories.Contracts
     public interface IGenericRepository<TEntity> where TEntity : BaseDomainEntity
     {
         Task<List<TEntity>> GetAll();
-        Task<List<TEntity>> Get(int id);
+        Task<TEntity> Get(int id);
         Task<bool> Exists(int id);
         Task Insert(TEntity entity);
         Task Delete(int id);

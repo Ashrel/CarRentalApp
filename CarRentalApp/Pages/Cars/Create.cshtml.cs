@@ -7,16 +7,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
 using Microsoft.EntityFrameworkCore;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Cars
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Car> _carRepository;
+        private readonly IGenericRepository<CarModel> _carModelRepository;
+        private readonly IGenericRepository<Colour> _colourRepository;
+        private readonly IGenericRepository<Make> _makesRepository;
 
-        public CreateModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public CreateModel(IGenericRepository<Car> carRepository,
+            IGenericRepository<Make> makesRepository,
+            IGenericRepository<CarModel> carModelRepository,
+            IGenericRepository<Colour> colourRepository)
         {
-            _context = context;
+            this._carRepository = carRepository;
+            this._carModelRepository = carModelRepository;
+            this._colourRepository = colourRepository;
+            this._makesRepository = makesRepository;
         }
 
         [BindProperty]
@@ -45,8 +55,7 @@ namespace CarRentalApp.Pages.Cars
                 return Page();
             }
 
-            _context.Cars.Add(Car);
-            await _context.SaveChangesAsync();
+            await _carRepository.Insert(Car);
 
             return RedirectToPage("./Index");
         }
@@ -65,8 +74,9 @@ namespace CarRentalApp.Pages.Cars
 
         public async Task LoadInitialData()
         {
-            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
-            Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
+            Makes = new SelectList(await _makesRepository.GetAll(), "Id", "Name");
+            Models = new SelectList(await _carModelRepository.GetAll(), "Id", "Name");
+            Colours = new SelectList(await _colourRepository.GetAll(), "Id", "Name");
         }
     }
 } 

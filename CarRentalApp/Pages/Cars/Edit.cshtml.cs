@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Data;
+using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Cars
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly IGenericRepository<Car> _carRepository;
 
-        public EditModel(CarRentalApp.Data.CarRentalAppDbContext context)
+        public EditModel(IGenericRepository<Car> carRepository)
         {
-            _context = context;
+            this._carRepository = carRepository;
         }
 
         [BindProperty]
@@ -28,7 +29,7 @@ namespace CarRentalApp.Pages.Cars
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            Car = await _carRepository.Get(id.Value);
 
             if (Car == null)
             {

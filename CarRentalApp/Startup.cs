@@ -33,6 +33,8 @@ namespace CarRentalApp
            });
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ICarModelsRepository, CarModelRepository>();
+            services.AddScoped<ICarsRepository, CarsRepository>();
 
             services.AddRazorPages();
         }

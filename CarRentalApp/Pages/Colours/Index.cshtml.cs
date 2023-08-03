@@ -40,3 +40,4 @@ namespace CarRentalApp.Pages.Colours
 
     }
 }
+

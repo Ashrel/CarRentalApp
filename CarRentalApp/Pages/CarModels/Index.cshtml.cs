@@ -12,8 +12,9 @@ namespace CarRentalApp.Pages.CarModels
 {
     public class IndexModel : PageModel
     {
-        private readonly IGenericRepository<CarModel> _repository;
-        public IndexModel(IGenericRepository<CarModel> repository)
+        private readonly ICarModelsRepository _repository;
+
+        public IndexModel(ICarModelsRepository repository)
         {
             this._repository = repository;
         }

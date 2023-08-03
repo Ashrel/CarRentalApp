@@ -55,7 +55,7 @@ namespace CarRentalApp.Pages.Colours
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ColourExists(Colour.Id))
+                if (!await ColourExistsAsync(Colour.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +68,9 @@ namespace CarRentalApp.Pages.Colours
             return RedirectToPage("./Index");
         }
 
-        private bool ColourExists(int id)
+        private async Task<bool> ColourExistsAsync(int id)
         {
-            return _context.Colours.Any(e => e.Id == id);
+            return await _repository.Exists(id);
         }
     }
 }

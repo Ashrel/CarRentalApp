@@ -12,9 +12,9 @@ namespace CarRentalApp.Pages.CarModels
 {
     public class DetailsModel : PageModel
     {
-        private readonly IGenericRepository<CarModel> _repository;
+        private readonly ICarModelsRepository _repository;
 
-        public DetailsModel(IGenericRepository<CarModel> repository)
+        public DetailsModel(ICarModelsRepository repository)
         {
             this._repository = repository;
         }
@@ -28,7 +28,7 @@ namespace CarRentalApp.Pages.CarModels
                 return NotFound();
             }
 
-            CarModel = await _repository.Get(id.Value);
+            CarModel = await _repository.GetCarModelWithDetails(id.Value);
 
             if (CarModel == null)
             {

@@ -13,14 +13,14 @@ namespace CarRentalApp.Pages.Cars
 {
     public class CreateModel : PageModel
     {
-        private readonly IGenericRepository<Car> _carRepository;
-        private readonly IGenericRepository<CarModel> _carModelRepository;
+        private readonly ICarsRepository _carRepository;
+        private readonly ICarModelsRepository _carModelRepository;
         private readonly IGenericRepository<Colour> _colourRepository;
         private readonly IGenericRepository<Make> _makesRepository;
 
-        public CreateModel(IGenericRepository<Car> carRepository,
+        public CreateModel(ICarsRepository carRepository,
             IGenericRepository<Make> makesRepository,
-            IGenericRepository<CarModel> carModelRepository,
+            ICarModelsRepository carModelRepository,
             IGenericRepository<Colour> colourRepository)
         {
             this._carRepository = carRepository;
@@ -49,6 +49,12 @@ namespace CarRentalApp.Pages.Cars
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if(await _carRepository.IsLicensePlateExists(Car.LicensePlateNumber))
+            {
+                ModelState.AddModelError(nameof(Car.LicensePlateNumber), "License Plate Number Exists Already");
+            }
+
             if (!ModelState.IsValid)
             {
                 await LoadInitialData();
@@ -62,15 +68,8 @@ namespace CarRentalApp.Pages.Cars
 
         public async Task<JsonResult> OnGetCarModels(int makeId)
         {
-            var models = await _context.CarModels
-                .Where(q => q.MakeId == makeId)
-                .ToListAsync();
-
-            return new JsonResult(models);
+            return new JsonResult(await _carModelRepository.GetCarModelsByMake(makeId));
         }
-
-
-
 
         public async Task LoadInitialData()
         {

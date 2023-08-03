@@ -13,11 +13,20 @@ namespace CarRentalApp.Pages.Cars
 {
     public class EditModel : PageModel
     {
-        private readonly IGenericRepository<Car> _carRepository;
+        private readonly ICarsRepository _carRepository;
+        private readonly ICarModelsRepository _carModelRepository;
+        private readonly IGenericRepository<Colour> _colourRepository;
+        private readonly IGenericRepository<Make> _makesRepository;
 
-        public EditModel(IGenericRepository<Car> carRepository)
+        public EditModel(ICarsRepository carRepository,
+            IGenericRepository<Make> makesRepository,
+            ICarModelsRepository carModelRepository,
+            IGenericRepository<Colour> colourRepository)
         {
             this._carRepository = carRepository;
+            this._carModelRepository = carModelRepository;
+            this._colourRepository = colourRepository;
+            this._makesRepository = makesRepository;
         }
 
         [BindProperty]
@@ -46,21 +55,24 @@ namespace CarRentalApp.Pages.Cars
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if (await _carRepository.IsLicensePlateExists(Car.LicensePlateNumber))
+            {
+                ModelState.AddModelError(nameof(Car.LicensePlateNumber), "License Plate Number Exists Already");
+            }
+
             if (!ModelState.IsValid)
             {
                 await LoadInitialData();
                 return Page();
             }
 
-            _context.Attach(Car).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _carRepository.Update(Car);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CarExists(Car.Id))
+                if (!await CarExistsAsync(Car.Id))
                 {
                     return NotFound();
                 }
@@ -75,24 +87,20 @@ namespace CarRentalApp.Pages.Cars
 
         public async Task<JsonResult> OnGetCarModels(int makeId)
         {
-            var models = await _context.CarModels
-                .Where(q => q.MakeId == makeId)
-                .ToListAsync();
-
-            return new JsonResult(models);
+            return new JsonResult(await _carModelRepository.GetCarModelsByMake(makeId));
         }
 
 
         private async Task LoadInitialData()
         {
-            Makes = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
-            Models = new SelectList(await _context.Makes.ToListAsync(), "Id", "Name");
-            Colours = new SelectList(await _context.Colours.ToListAsync(), "Id", "Name");
+            Makes = new SelectList(await _makesRepository.GetAll(), "Id", "Name");
+            Models = new SelectList(await _carModelRepository.GetAll(), "Id", "Name");
+            Colours = new SelectList(await _colourRepository.GetAll(), "Id", "Name");
         }
 
-        private bool CarExists(int id)
+        private async Task<bool> CarExistsAsync(int id)
         {
-            return _context.Cars.Any(e => e.Id == id);
+            return await _carRepository.Exists(id);
         }
     }
 }

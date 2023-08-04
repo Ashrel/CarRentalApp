@@ -13,10 +13,10 @@ namespace CarRentalApp.Pages.Roles
 {
     public class ManageModel : PageModel
     {
-        private readonly CarRentalApp.Data.CarRentalAppDbContext _context;
+        private readonly Data.CarRentalAppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-        public ManageModel(CarRentalApp.Data.CarRentalAppDbContext context,
+        public ManageModel(Data.CarRentalAppDbContext context,
        UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _context = context;

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CarRentalApp.Data.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace CarRentalApp.Data
 {
-    public class CarRentalAppDbContext : DbContext
+    public class CarRentalAppDbContext : IdentityDbContext<ApplicationUser>
     {
         public CarRentalAppDbContext(DbContextOptions<CarRentalAppDbContext> options) : base(options)
         {
 
         }
+
         public DbSet<Car> Cars { get; set; }
 
         public DbSet<Make> Makes { get; set; }

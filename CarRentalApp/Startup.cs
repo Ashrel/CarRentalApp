@@ -1,9 +1,11 @@
 using CarRentalApp.Data;
+using CarRentalApp.Data.Identity;
 using CarRentalApp.Repositories.Contracts;
 using CarRentalApp.Repositories.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,10 @@ namespace CarRentalApp
            {
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
            });
+
+            services.AddIdentityCore<ApplicationUser>(options => { options.SignIn.RequireConfirmedAccount = false; })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<CarRentalAppDbContext>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICarModelsRepository, CarModelRepository>();

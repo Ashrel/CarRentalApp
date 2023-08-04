@@ -34,8 +34,7 @@ namespace CarRentalApp
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
            });
 
-            services.AddIdentityCore<ApplicationUser>(options => { options.SignIn.RequireConfirmedAccount = false; })
-                .AddRoles<IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; })
                 .AddEntityFrameworkStores<CarRentalAppDbContext>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

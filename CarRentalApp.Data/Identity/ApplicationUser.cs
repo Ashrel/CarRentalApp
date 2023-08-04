@@ -11,6 +11,6 @@ namespace CarRentalApp.Data.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

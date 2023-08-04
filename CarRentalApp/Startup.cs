@@ -41,6 +41,8 @@ namespace CarRentalApp
             services.AddScoped<ICarModelsRepository, CarModelRepository>();
             services.AddScoped<ICarsRepository, CarsRepository>();
 
+            services.AddAuthorization();
+
             services.AddRazorPages();
         }
 
@@ -62,6 +64,8 @@ namespace CarRentalApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

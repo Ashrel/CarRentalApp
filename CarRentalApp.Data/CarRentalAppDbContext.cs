@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarRentalApp.Data
 {
-    public class CarRentalAppDbContext : IdentityDbContext<ApplicationUser>
+    public class CarRentalAppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public CarRentalAppDbContext(DbContextOptions<CarRentalAppDbContext> options) : base(options)
         {
@@ -23,5 +23,8 @@ namespace CarRentalApp.Data
         public DbSet<CarModel> CarModels { get; set; }
 
         public DbSet<Colour> Colours { get; set; }
+
+        
     }
+    
 }

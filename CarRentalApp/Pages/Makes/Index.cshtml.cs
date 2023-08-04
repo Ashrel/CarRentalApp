@@ -10,6 +10,7 @@ using CarRentalApp.Repositories.Contracts;
 
 namespace CarRentalApp.Pages.Makes
 {
+
     public class IndexModel : PageModel
     {
         private readonly IGenericRepository<Make> _repository;

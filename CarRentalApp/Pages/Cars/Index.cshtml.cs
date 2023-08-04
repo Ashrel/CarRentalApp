@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Data;
 using CarRentalApp.Repositories.Contracts;
 
+
 namespace CarRentalApp.Pages.Cars
 {
+    
     public class IndexModel : PageModel
     {
         private readonly ICarsRepository _repository;
@@ -39,4 +41,7 @@ namespace CarRentalApp.Pages.Cars
         }
     }
 
+    internal class AuthorizedAttribute : Attribute
+    {
+    }
 }

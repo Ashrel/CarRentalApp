@@ -29,23 +29,42 @@ namespace CarRentalApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CarRentalAppDbContext>(options =>
-           {
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-           });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; })
-                .AddEntityFrameworkStores<CarRentalAppDbContext>();
-
+           
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICarModelsRepository, CarModelRepository>();
             services.AddScoped<ICarsRepository, CarsRepository>();
 
-            services.AddAuthorization();
+            services.AddDbContext<CarRentalAppDbContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+    b => b.MigrationsAssembly("CarRentalApp")));
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<CarRentalAppDbContext>()
+                .AddDefaultTokenProviders();
+
+
 
             services.AddRazorPages();
-        }
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 1;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 1;
+                options.Lockout.AllowedForNewUsers = true;
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

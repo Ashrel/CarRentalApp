@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using CarRentalApp.Data.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalApp.Pages.Roles
 {
+    [Authorize(Roles = "Admin")]
     public class ManageModel : PageModel
     {
         private readonly Data.CarRentalAppDbContext _context;

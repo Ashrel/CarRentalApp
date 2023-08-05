@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
 using CarRentalApp.Repositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalApp.Pages.Colours
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly IGenericRepository<Colour> _repository;

@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentalApp.Data;
 using Microsoft.EntityFrameworkCore;
 using CarRentalApp.Repositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalApp.Pages.CarModels
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly IGenericRepository<CarModel> _carModelrepository;

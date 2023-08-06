@@ -21,20 +21,20 @@ namespace CarRentalApp.Data.Identity
         {
             var user = new ApplicationUser
             {
-                UserName = "Admin@gmail.com",
-                NormalizedUserName = "Admin@gmail.com",
+                UserName = "ADMIN",
+                NormalizedUserName = "ADMIN",
                 Email = "Admin@gmail.com",
-                NormalizedEmail = "Admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var roleStore = new RoleStore<IdentityRole>(_context);
+            var roleStore = new RoleStore<ApplicationRole>(_context);
 
             if (!_context.Roles.Any(r => r.Name == "Admin"))
             {
-                await roleStore.CreateAsync(new IdentityRole { Name = "Admin", NormalizedName = "Admin" });
+                await roleStore.CreateAsync(new ApplicationRole { Name = "Admin", NormalizedName = "ADMIN" });
             }
 
             if (!_context.Users.Any(u => u.UserName == user.UserName))

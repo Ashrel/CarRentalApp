@@ -95,7 +95,7 @@ namespace CarRentalApp.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
                     
                     //adds registered users automatically to user roles
-                    var roleResult = await _userManager.AddToRoleAsync(user, "Users");
+                    //var roleResult = await _userManager.AddToRoleAsync(user, "Users");
                     
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

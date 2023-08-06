@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalApp.Pages.Roles
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Users")]
     public class ManageModel : PageModel
     {
         private readonly Data.CarRentalAppDbContext _context;

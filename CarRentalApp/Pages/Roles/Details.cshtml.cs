@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace CarRentalApp.Pages.Roles
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class DetailsModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;

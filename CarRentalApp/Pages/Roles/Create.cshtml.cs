@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 namespace CarRentalApp.Pages.Roles
 {
-    //[Authorize(Roles = "Admin,Users")]
+    [Authorize(Roles = "Admin,Users")]
     public class CreateModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalApp.Pages.Roles
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
